@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--Required meta tags-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Duplicate Google</title>
+        <!--Bootstrap CSS-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
+        <style>
+            .init{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50% , -50%);
+            }
+            .font-big{
+                font-size: 30px;
+            }
+            footer{
+                margin: 100px;
+
+            }
+            footer p{
+                
+                margin: auto;
+                text-align: center;
+            }
+
+            
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="container pt-4 init" id="main">
+                <h2 class="text-warning text-center"><span class="text-danger" >Google </span>Like Search Engine</h2>
+                <form action="">
+                    <input type="text" class="form-control w-75 mx-auto my-3" placeholder="You Can Search Anything" id="searchInput">
+                    <a class="btn btn-danger btn-block w-25 mx-auto text-white font-weight-bold"id="clickbtn" onclick="searchResult()" >search</a>
+                </form>
+            </div>
+            <div class="container">
+                <div id="searchResutl" >
+
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>develop by -<a href="https://www.facebook.com/mustafiz.munna.58">Mustafiz Munna</a></p>
+        </footer>
+
+        <!--Optional JavaScript-->
+        <!--jQuery first, then Popper.js, then Bootstrap JS-->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script>
+
+         
+
+            function searchResult(){
+                document.getElementById('main').classList.remove('init');
+                
+                let serchval = document.getElementById('searchInput');
+
+                let result = ``;
+                
+                fetch(`http://api.serpstack.com/search?access_key=76435862ad370ad3fe072cdf3930ef10&query=${serchval.value}`)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data.organic_results);
+                    
+                    data.organic_results.forEach(searchItem => {
+                      result += `<p calss="w-75"><a href="${searchItem.url}" target="_blank" class="font-big font-weight-bold"> ${searchItem.title}</a></p>
+                      <p class="w-50">${searchItem.snippet}</p>`;
+                      document.getElementById('searchResutl').innerHTML = result ;
+                    });
+                })
+                
+                
+                
+                
+
+            }
+            
+        </script>
+    </body>
+</html>
